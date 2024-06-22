@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
+import 'screens/home/home_screen.dart';
 import 'screens/map_screen.dart';
 import 'screens/track_screen.dart';
 import 'screens/profile_screen.dart';
 import 'bottom_navigation_bar.dart'; // Import the new component
-
+import 'components/logo.dart'; // Import the logo component
 void main() {
   runApp(MyApp());
 }
@@ -48,8 +48,10 @@ class _BottomNavigationBarExampleState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+     appBar: AppBar(
+        title: const Center(
+          child: Logo(), // Use the Logo component here
+        ),
       ),
       body: IndexedStack(
         index: _selectedIndex,
