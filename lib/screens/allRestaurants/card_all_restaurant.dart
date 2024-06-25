@@ -1,17 +1,20 @@
 // restaurant_card.dart
 import 'package:flutter/material.dart';
-import '../restaurantDetail/restaurant_detail_screen.dart'; // Import the restaurant detail screen
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import '../restaurantDetail/restaurant_detail_screen.dart';
 
-class AllRestaurantCard extends StatelessWidget {
+class RestaurantCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final int id;
+  final double rating;
 
-  const AllRestaurantCard({
+  const RestaurantCard({
     Key? key,
     required this.imageUrl,
     required this.title,
     required this.id,
+    required this.rating,
   }) : super(key: key);
 
   @override
@@ -21,18 +24,21 @@ class AllRestaurantCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => RestaurantDetailScreen(restaurantId: id),
+            builder: (context) => RestaurantDetailScreen(
+              restaurantId: id,
+              restaurantTitle: title,
+            ),
           ),
         );
       },
       child: Card(
-        elevation: 1.0, // Increased elevation for a more prominent shadow
+        elevation: 1.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Container(
-          height: 150, // Set the height of the card to match the container in HomeScreen
-          width: 180, // Set the width of the card
+          height: 190,
+          width: 170,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -40,12 +46,11 @@ class AllRestaurantCard extends StatelessWidget {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12.0)),
                 child: Image.asset(
                   imageUrl,
-                  height: 140, // Adjust image height as needed
+                  height: 120,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
               ),
-              Spacer(), // Takes up the remaining space
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -58,8 +63,20 @@ class AllRestaurantCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    SizedBox(height: 4),
+                    RatingBarIndicator(
+                      rating: rating,
+                      itemBuilder: (context, index) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      itemCount: 5,
+                      itemSize: 20,
+                      direction: Axis.horizontal,
+                    ),
+                    SizedBox(height: 4),
                     Text(
-                      'ID: $id', // Display the ID property
+                      'ID: $id',
                       style: TextStyle(fontSize: 14.0),
                     ),
                   ],

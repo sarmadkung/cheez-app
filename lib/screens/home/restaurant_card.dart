@@ -24,7 +24,7 @@ class RestaurantCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => RestaurantDetailScreen(restaurantId: id),
+            builder: (context) => RestaurantDetailScreen(restaurantId: id, restaurantTitle: title,),
           ),
         );
       },
@@ -61,15 +61,21 @@ class RestaurantCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 4),
-                    RatingBarIndicator(
-                      rating: rating,
-                      itemBuilder: (context, index) => Icon(
+                    RatingBar.builder(
+                      initialRating: rating,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 20,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                      itemBuilder: (context, _) => Icon(
                         Icons.star,
                         color: Colors.amber,
                       ),
-                      itemCount: 5,
-                      itemSize: 20,
-                      direction: Axis.horizontal,
+                      onRatingUpdate: (rating) {
+                        // Handle rating update if needed
+                      },
                     ),
                     SizedBox(height: 4),
                     Text(
