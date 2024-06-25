@@ -1,95 +1,140 @@
 // home_screen.dart
 import 'package:flutter/material.dart';
-import '../../components/custom_search_bar.dart'; // Import the renamed search bar component
+import '../../components/custom_search_bar.dart';
 import './restaurant_card.dart';
-import '../restaurantDetail/restaurant_detail_screen.dart'; // Import the restaurant detail screen
-import '../allRestaurants/all_restaurants_screen.dart'; // Import the all restaurants screen
-import '../../components/logo.dart'; // Import the Logo widget
+import '../restaurantDetail/restaurant_detail_screen.dart';
+import '../allRestaurants/all_restaurants_screen.dart';
+import '../../components/logo.dart';
 
-// Define a restaurant model
 class Restaurant {
   final String imageUrl;
   final String title;
   final int id;
+  final double rating;
 
   Restaurant({
     required this.imageUrl,
     required this.title,
     required this.id,
+    required this.rating,
   });
 }
 
 class HomeScreen extends StatelessWidget {
-  // Define a list of Restaurant objects
-  final List<Restaurant> restaurants = [
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 1', id: 1),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 2', id: 2),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 3', id: 3),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 4', id: 4),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 5', id: 5),
+  final List<Restaurant> popularRestaurants = [
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 1', id: 1, rating: 4.5),
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 2', id: 2, rating: 3.8),
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 3', id: 3, rating: 4.0),
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 4', id: 4, rating: 4.2),
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 5', id: 5, rating: 4.7),
+  ];
+
+  final List<Restaurant> nearMeRestaurants = [
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Near Me Restaurant 1', id: 11, rating: 3.9),
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Near Me Restaurant 2', id: 12, rating: 4.1),
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Near Me Restaurant 3', id: 13, rating: 4.3),
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Near Me Restaurant 4', id: 14, rating: 3.5),
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Near Me Restaurant 5', id: 15, rating: 4.6),
+  ];
+
+  final List<Restaurant> suggestedRestaurants = [
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Suggested Restaurant 1', id: 21, rating: 4.3),
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Suggested Restaurant 2', id: 22, rating: 4.4),
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Suggested Restaurant 3', id: 23, rating: 4.1),
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Suggested Restaurant 4', id: 24, rating: 3.9),
+    Restaurant(imageUrl: 'assets/cheez.png', title: 'Suggested Restaurant 5', id: 25, rating: 4.5),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Color(0xFFF8F8F8), // Off-white background color
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Align children to the start (left)
-          children: [
-            CustomSearchBar(
-              selectedItemColor: Color.fromARGB(255, 2, 165, 43),
-              unselectedItemColor: Colors.black54,
-            ),
-            SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0), // Add horizontal padding
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between text and button
-                children: [
-                  Text(
-                    'Popular Restaurants',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AllRestaurantsScreen(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'See All',
-                      style: TextStyle(color: Color.fromARGB(255, 49, 180, 1)), // Style the text button
-                    ),
-                  ),
-                ],
+      body: SingleChildScrollView(
+        child: Container(
+          color: Color(0xFFF8F8F8),
+          padding: EdgeInsets.symmetric(vertical: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomSearchBar(
+                selectedItemColor: Color.fromARGB(255, 2, 165, 43),
+                unselectedItemColor: Colors.black54,
               ),
-            ),
-            SizedBox(height: 16),
-            Container(
-              height: 210, // Set the height of the restaurant card list
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: restaurants.length,
-                itemBuilder: (context, index) {
-                  final restaurant = restaurants[index];
-                  return Padding(
-                    padding: EdgeInsets.only(left: index == 0 ? 8.0 : 0.0, right: 8.0),
-                    child: RestaurantCard(
-                      imageUrl: restaurant.imageUrl,
-                      title: restaurant.title,
-                      id: restaurant.id,
+              SizedBox(height: 16),
+              buildRestaurantSection(
+                context,
+                'Popular Restaurants',
+                popularRestaurants,
+              ),
+              SizedBox(height: 24),
+              buildRestaurantSection(
+                context,
+                'Near Me Restaurants',
+                nearMeRestaurants,
+              ),
+              SizedBox(height: 24),
+              buildRestaurantSection(
+                context,
+                'Suggested for you',
+                suggestedRestaurants,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildRestaurantSection(BuildContext context, String title, List<Restaurant> restaurants) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AllRestaurantsScreen(),
                     ),
                   );
                 },
+                child: Text(
+                  'See All',
+                  style: TextStyle(color: Color.fromARGB(255, 49, 180, 1)),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+        SizedBox(height: 16),
+        Container(
+          height: 240,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: restaurants.length,
+            itemBuilder: (context, index) {
+              final restaurant = restaurants[index];
+              return Padding(
+                padding: EdgeInsets.only(left: index == 0 ? 8.0 : 0.0, right: 8.0),
+                child: RestaurantCard(
+                  imageUrl: restaurant.imageUrl,
+                  title: restaurant.title,
+                  id: restaurant.id,
+                  rating: restaurant.rating,
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
