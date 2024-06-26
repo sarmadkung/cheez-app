@@ -1,18 +1,18 @@
-// restaurant_detail_card.dart
-
 import 'package:flutter/material.dart';
-import '../categories/categories.dart'; // Import DetailDishScreen
+import '../dishDetail/dish_detail_screen.dart'; // Import DetailDishScreen
 
 class RestaurantDetailCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final double rating;
+  final int id;
 
   const RestaurantDetailCard({
     Key? key,
     required this.imageUrl,
     required this.title,
     required this.rating,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -22,7 +22,10 @@ class RestaurantDetailCard extends StatelessWidget {
         // Navigate to detail screen with dish details
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => CategoriesScreen(title: title),
+            builder: (context) => DishDetailsScreen(
+               dishId: id,
+               dishName: title
+            ),
           ),
         );
       },

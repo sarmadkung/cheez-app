@@ -1,5 +1,3 @@
-// restaurant_detail_screen.dart
-
 import 'package:flutter/material.dart';
 import 'restaurant_detail_card.dart';
 import '../../layouts/base_layout.dart';
@@ -24,11 +22,46 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen>
   late Animation<double> _animation;
 
   final List<Map<String, dynamic>> categories = [
-    {'title': 'Rice', 'dishes': ['Rice Dish']},
-    {'title': 'Meat', 'dishes': ['Meat Dish']},
-    {'title': 'Arabic', 'dishes': ['Arabic Dish']},
-    {'title': 'Chinese', 'dishes': ['Chinese Dish']},
-    {'title': 'Fast Food', 'dishes': ['Fast Food Dish']},
+    {
+      'title': 'Rice',
+      'dishes': [
+        {'title': 'Chicken Rice', 'id': 1, 'rating': 4.5},
+        {'title': 'Fried Rice', 'id': 2, 'rating': 4.0},
+        {'title': 'Rice with Veggies', 'id': 3, 'rating': 3.5},
+      ]
+    },
+    {
+      'title': 'Meat',
+      'dishes': [
+        {'title': 'Grilled Meat', 'id': 4, 'rating': 4.5},
+        {'title': 'Steak', 'id': 5, 'rating': 4.0},
+        {'title': 'Meatballs', 'id': 6, 'rating': 3.5},
+      ]
+    },
+    {
+      'title': 'Arabic',
+      'dishes': [
+        {'title': 'Shawarma', 'id': 7, 'rating': 4.5},
+        {'title': 'Falafel', 'id': 8, 'rating': 4.0},
+        {'title': 'Hummus', 'id': 9, 'rating': 3.5},
+      ]
+    },
+    {
+      'title': 'Chinese',
+      'dishes': [
+        {'title': 'Kung Pao Chicken', 'id': 10, 'rating': 4.5},
+        {'title': 'Sweet and Sour Pork', 'id': 11, 'rating': 4.0},
+        {'title': 'Spring Rolls', 'id': 12, 'rating': 3.5},
+      ]
+    },
+    {
+      'title': 'Fast Food',
+      'dishes': [
+        {'title': 'Burger', 'id': 13, 'rating': 4.5},
+        {'title': 'Pizza', 'id': 14, 'rating': 4.0},
+        {'title': 'Fries', 'id': 15, 'rating': 3.5},
+      ]
+    },
   ];
 
   @override
@@ -53,64 +86,64 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: Text('Restaurant Details'), // Replace with your preferred title
-      ),
-      body: BaseLayout(
-        selectedIndex: 0, // Set the selected index accordingly
-        onItemTapped: (index) {
-          // Handle navigation based on index
-          switch (index) {
-            case 0:
-              // Navigate to HomeScreen or any other screen
-              break;
-            case 1:
-              // Navigate to SearchScreen or any other screen
-              break;
-            case 2:
-              // Navigate to ProfileScreen or any other screen
-              break;
-          }
-        },
-        body: FadeTransition(
-          opacity: _animation,
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Categories',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8.0),
-                ...categories.map((category) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        category['title'],
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    return BaseLayout(
+      selectedIndex: 0, // Set the selected index accordingly
+      onItemTapped: (index) {
+        // Handle navigation based on index
+        switch (index) {
+          case 0:
+            // Navigate to HomeScreen or any other screen
+            break;
+          case 1:
+            // Navigate to SearchScreen or any other screen
+            break;
+          case 2:
+            // Navigate to ProfileScreen or any other screen
+            break;
+        }
+      },
+      body: FadeTransition(
+        opacity: _animation,
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Categories',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8.0),
+              ...categories.map((category) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      category['title'],
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 8.0),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: category['dishes'].map<Widget>((dish) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: RestaurantDetailCard(
+                              imageUrl: 'assets/cheez.png', // Placeholder image
+                              title: dish['title'],
+                              rating: dish['rating'],
+                              id: dish['id'],
+                            ),
+                          );
+                        }).toList(),
                       ),
-                      SizedBox(height: 8.0),
-                      RestaurantDetailCard(
-                        imageUrl: 'assets/cheez.png', // Placeholder image
-                        title: category['dishes'][0], // Only the first dish
-                        rating: 4.0, // Adjust rating as needed
-                      ),
-                      SizedBox(height: 16.0),
-                    ],
-                  );
-                }).toList(),
-              ],
-            ),
+                    ),
+                    SizedBox(height: 16.0),
+                  ],
+                );
+              }).toList(),
+            ],
           ),
         ),
       ),
