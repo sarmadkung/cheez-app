@@ -32,7 +32,9 @@ class RestaurantCard extends StatelessWidget {
         elevation: 1.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
+          side: BorderSide(color: Colors.green[200]!, width: 1), // Add a 1px darker green border
         ),
+        color: Color.fromARGB(255, 248, 249, 248), 
         child: Container(
           height: 190, // Adjust height as necessary to avoid overflow
           width: 170,
