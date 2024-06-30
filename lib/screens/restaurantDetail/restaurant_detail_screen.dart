@@ -23,43 +23,52 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen>
 
   final List<Map<String, dynamic>> categories = [
     {
+      'title': 'Popular Dishes',
+      'dishes': [
+        {'title': 'Pizza', 'id': 1, 'rating': 4.5, 'image': 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg'},
+        {'title': 'Pasta', 'id': 2, 'rating': 4.0, 'image': 'https://images.pexels.com/photos/270346/pexels-photo-270346.jpeg'},
+        {'title': 'Burger', 'id': 3, 'rating': 3.5, 'image': 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg'},
+        {'title': 'Salad', 'id': 4, 'rating': 4.2, 'image': 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg'},
+      ]
+    },
+    {
       'title': 'Rice',
       'dishes': [
-        {'title': 'Chicken Rice', 'id': 1, 'rating': 4.5},
-        {'title': 'Fried Rice', 'id': 2, 'rating': 4.0},
-        {'title': 'Rice with Veggies', 'id': 3, 'rating': 3.5},
+        {'title': 'Chicken Rice', 'id': 5, 'rating': 4.5, 'image': 'https://images.pexels.com/photos/4221804/pexels-photo-4221804.jpeg'},
+        {'title': 'Fried Rice', 'id': 6, 'rating': 4.0, 'image': 'https://images.pexels.com/photos/324030/pexels-photo-324030.jpeg'},
+        {'title': 'Rice with Veggies', 'id': 7, 'rating': 3.5, 'image': 'https://images.pexels.com/photos/4221804/pexels-photo-4221804.jpeg'},
       ]
     },
     {
       'title': 'Meat',
       'dishes': [
-        {'title': 'Grilled Meat', 'id': 4, 'rating': 4.5},
-        {'title': 'Steak', 'id': 5, 'rating': 4.0},
-        {'title': 'Meatballs', 'id': 6, 'rating': 3.5},
+        {'title': 'Grilled Meat', 'id': 8, 'rating': 4.5, 'image': 'https://images.pexels.com/photos/396228/pexels-photo-396228.jpeg'},
+        {'title': 'Steak', 'id': 9, 'rating': 4.0, 'image': 'https://images.pexels.com/photos/4221804/pexels-photo-4221804.jpeg'},
+        {'title': 'Meatballs', 'id': 10, 'rating': 3.5, 'image': 'https://images.pexels.com/photos/459469/pexels-photo-459469.jpeg'},
       ]
     },
     {
       'title': 'Arabic',
       'dishes': [
-        {'title': 'Shawarma', 'id': 7, 'rating': 4.5},
-        {'title': 'Falafel', 'id': 8, 'rating': 4.0},
-        {'title': 'Hummus', 'id': 9, 'rating': 3.5},
+        {'title': 'Shawarma', 'id': 11, 'rating': 4.5, 'image': 'https://images.pexels.com/photos/1259948/pexels-photo-1259948.jpeg'},
+        {'title': 'Falafel', 'id': 12, 'rating': 4.0, 'image': 'https://images.pexels.com/photos/4221804/pexels-photo-4221804.jpeg'},
+        {'title': 'Hummus', 'id': 13, 'rating': 3.5, 'image': 'https://images.pexels.com/photos/923182/pexels-photo-923182.jpeg'},
       ]
     },
     {
       'title': 'Chinese',
       'dishes': [
-        {'title': 'Kung Pao Chicken', 'id': 10, 'rating': 4.5},
-        {'title': 'Sweet and Sour Pork', 'id': 11, 'rating': 4.0},
-        {'title': 'Spring Rolls', 'id': 12, 'rating': 3.5},
+        {'title': 'Kung Pao Chicken', 'id': 14, 'rating': 4.5, 'image': 'https://images.pexels.com/photos/414494/pexels-photo-414494.jpeg'},
+        {'title': 'Sweet and Sour Pork', 'id': 15, 'rating': 4.0, 'image': 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg'},
+        {'title': 'Spring Rolls', 'id': 16, 'rating': 3.5, 'image': 'https://images.pexels.com/photos/270346/pexels-photo-270346.jpeg'},
       ]
     },
     {
       'title': 'Fast Food',
       'dishes': [
-        {'title': 'Burger', 'id': 13, 'rating': 4.5},
-        {'title': 'Pizza', 'id': 14, 'rating': 4.0},
-        {'title': 'Fries', 'id': 15, 'rating': 3.5},
+        {'title': 'Burger', 'id': 17, 'rating': 4.5, 'image': 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg'},
+        {'title': 'Pizza', 'id': 18, 'rating': 4.0, 'image': 'https://images.pexels.com/photos/4221804/pexels-photo-4221804.jpeg'},
+        {'title': 'Fries', 'id': 19, 'rating': 3.5, 'image': 'https://images.pexels.com/photos/277253/pexels-photo-277253.jpeg'},
       ]
     },
   ];
@@ -86,64 +95,91 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BaseLayout(
-      selectedIndex: 0, // Set the selected index accordingly
-      onItemTapped: (index) {
-        // Handle navigation based on index
-        switch (index) {
-          case 0:
-            // Navigate to HomeScreen or any other screen
-            break;
-          case 1:
-            // Navigate to SearchScreen or any other screen
-            break;
-          case 2:
-            // Navigate to ProfileScreen or any other screen
-            break;
-        }
-      },
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40.0), // Adjust the height as per your design
+        child: AppBar(
+          automaticallyImplyLeading: false, // Remove the default back button
+          flexibleSpace: Container(
+            width: double.infinity,
+            height: 100, // Adjust the height as per your design
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: Image.asset(
+                    'assets/logo.jpeg', // Replace with your logo asset path
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                  left: 8.0, // Adjust the padding as per your design
+                  top: 50.0, // Adjust the top padding to move it down
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
       body: FadeTransition(
         opacity: _animation,
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Categories',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8.0),
-              ...categories.map((category) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      category['title'],
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 8.0),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: category['dishes'].map<Widget>((dish) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: RestaurantDetailCard(
-                              imageUrl: 'assets/cheez.png', // Placeholder image
-                              title: dish['title'],
-                              rating: dish['rating'],
-                              id: dish['id'],
-                            ),
-                          );
-                        }).toList(),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFFfafcfa), // Very light greenish-white
+                Color(0xFFf7fff7), // Light greenish-white
+              ],
+            ),
+          ),
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Categories',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8.0),
+                ...categories.map((category) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        category['title'],
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    SizedBox(height: 16.0),
-                  ],
-                );
-              }).toList(),
-            ],
+                      SizedBox(height: 8.0),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: category['dishes'].map<Widget>((dish) {
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: RestaurantDetailCard(
+                                imageUrl: dish['image'], // Use image URL from dish object
+                                title: dish['title'],
+                                rating: dish['rating'],
+                                id: dish['id'],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      SizedBox(height: 16.0),
+                    ],
+                  );
+                }).toList(),
+              ],
+            ),
           ),
         ),
       ),

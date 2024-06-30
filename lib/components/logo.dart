@@ -5,11 +5,12 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      widthFactor: 0.5,
+    return Container(
+      width: double.infinity, // Take full width of the screen
       child: Image.asset(
-        'assets/cheez.png', // Update with your logo path
-        height: 70,
+        'assets/logo.jpeg', // Update with your logo path
+        fit: BoxFit.cover, // Ensure the logo fills the container
+        height: 100, // Adjust height as needed
       ),
     );
   }

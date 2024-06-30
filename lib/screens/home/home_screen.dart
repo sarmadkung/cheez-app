@@ -1,4 +1,3 @@
-// home_screen.dart
 import 'package:flutter/material.dart';
 import '../../components/custom_search_bar.dart';
 import './restaurant_card.dart';
@@ -22,27 +21,27 @@ class Restaurant {
 
 class HomeScreen extends StatelessWidget {
   final List<Restaurant> popularRestaurants = [
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 1', id: 1, rating: 4.5),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 2', id: 2, rating: 3.8),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 3', id: 3, rating: 4.0),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 4', id: 4, rating: 4.2),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Restaurant 5', id: 5, rating: 4.7),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', title: 'Restaurant 1', id: 1, rating: 4.5),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg', title: 'Restaurant 2', id: 2, rating: 3.8),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg', title: 'Restaurant 3', id: 3, rating: 4.0),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg', title: 'Restaurant 4', id: 4, rating: 4.2),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/305236/pexels-photo-305236.jpeg', title: 'Restaurant 5', id: 5, rating: 4.7),
   ];
 
   final List<Restaurant> nearMeRestaurants = [
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Near Me Restaurant 1', id: 11, rating: 3.9),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Near Me Restaurant 2', id: 12, rating: 4.1),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Near Me Restaurant 3', id: 13, rating: 4.3),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Near Me Restaurant 4', id: 14, rating: 3.5),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Near Me Restaurant 5', id: 15, rating: 4.6),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg', title: ' Restaurant 1', id: 11, rating: 3.9),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', title: ' Restaurant 2', id: 12, rating: 4.1),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg', title: ' Restaurant 3', id: 13, rating: 4.3),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg', title: ' Restaurant 4', id: 14, rating: 3.5),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg', title: ' Restaurant 5', id: 15, rating: 4.6),
   ];
 
   final List<Restaurant> suggestedRestaurants = [
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Suggested Restaurant 1', id: 21, rating: 4.3),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Suggested Restaurant 2', id: 22, rating: 4.4),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Suggested Restaurant 3', id: 23, rating: 4.1),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Suggested Restaurant 4', id: 24, rating: 3.9),
-    Restaurant(imageUrl: 'assets/cheez.png', title: 'Suggested Restaurant 5', id: 25, rating: 4.5),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', title: 'Restaurant 1', id: 21, rating: 4.3),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg', title: 'Restaurant 2', id: 22, rating: 4.4),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', title: 'Restaurant 3', id: 23, rating: 4.1),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg', title: 'Restaurant 4', id: 24, rating: 3.9),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg', title: 'Restaurant 5', id: 25, rating: 4.5),
   ];
 
   @override
@@ -51,7 +50,7 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           color: Color(0xFFF8F8F8),
-          padding: EdgeInsets.symmetric(vertical: 16.0),
+          padding: EdgeInsets.symmetric(vertical: 8.0), // Reduced vertical padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -59,19 +58,19 @@ class HomeScreen extends StatelessWidget {
                 selectedItemColor: Color.fromARGB(255, 2, 165, 43),
                 unselectedItemColor: Colors.black54,
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 8),
               buildRestaurantSection(
                 context,
                 'Popular Restaurants',
                 popularRestaurants,
               ),
-              SizedBox(height: 24),
+              SizedBox(height: 16),
               buildRestaurantSection(
                 context,
                 'Near Me Restaurants',
                 nearMeRestaurants,
               ),
-              SizedBox(height: 24),
+              SizedBox(height: 16),
               buildRestaurantSection(
                 context,
                 'Suggested for you',
@@ -89,7 +88,7 @@ class HomeScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0), // Updated padding
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -114,9 +113,9 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 16),
+        SizedBox(height: 8), // Reduced height
         Container(
-          height: 240,
+          height: 210,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: restaurants.length,

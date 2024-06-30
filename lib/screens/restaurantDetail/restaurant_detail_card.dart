@@ -6,6 +6,7 @@ class RestaurantDetailCard extends StatelessWidget {
   final String title;
   final double rating;
   final int id;
+  final String defaultImageUrl = 'https://images.pexels.com/photos/3764642/pexels-photo-3764642.jpeg'; // Default Pexels image URL
 
   const RestaurantDetailCard({
     Key? key,
@@ -31,53 +32,60 @@ class RestaurantDetailCard extends StatelessWidget {
       },
       child: Card(
         elevation: 2.0,
+         color: Color(0xFFf7fff7), 
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Container(
-          padding: EdgeInsets.all(8.0),
-          height: 190, // Reduced height
           width: 170,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12.0),
-                    child: Image.asset(
-                      imageUrl,
-                      height: 100, // Original image height
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Positioned(
-                    top: 8.0,
-                    left: 8.0,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 8.0),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 14.0, // Original font size
-                  fontWeight: FontWeight.bold,
+              ClipRRect(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(12.0)),
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: imageUrl.isNotEmpty
+                      ? Image.network(
+                          imageUrl,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            // Display default image from Pexels if imageUrl is invalid or empty
+                            return Image.network(
+                              defaultImageUrl,
+                              fit: BoxFit.cover,
+                            );
+                          },
+                        )
+                      : Image.network(
+                          defaultImageUrl,
+                          fit: BoxFit.cover,
+                        ),
                 ),
               ),
-              SizedBox(height: 4.0),
-              Text(
-                'Rating: $rating',
-                style: TextStyle(
-                  fontSize: 12.0, // Original font size
-                  color: Colors.grey,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 4.0),
+                    Text(
+                      'Rating: $rating',
+                      style: TextStyle(
+                        fontSize: 12.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
