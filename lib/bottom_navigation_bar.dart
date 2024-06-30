@@ -1,4 +1,3 @@
-// custom_bottom_navigation_bar.dart
 import 'package:flutter/material.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -35,6 +34,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       currentIndex: selectedIndex,
       selectedItemColor: Color.fromARGB(255, 3, 134, 16),
       unselectedItemColor: Colors.black54,
+      backgroundColor: Colors.green[200], // Set background color to light green 200
       onTap: onItemTapped,
     );
   }

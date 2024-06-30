@@ -1,4 +1,3 @@
-// restaurant_card.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../restaurantDetail/restaurant_detail_screen.dart';
@@ -24,7 +23,10 @@ class RestaurantCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => RestaurantDetailScreen(restaurantId: id, restaurantTitle: title,),
+            builder: (context) => RestaurantDetailScreen(
+              restaurantId: id,
+              restaurantTitle: title,
+            ),
           ),
         );
       },
@@ -34,20 +36,36 @@ class RestaurantCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
           side: BorderSide(color: Colors.green[200]!, width: 1), // Add a 1px darker green border
         ),
-        color: Color.fromARGB(255, 248, 249, 248), 
+        color: Color.fromARGB(255, 248, 249, 248),
         child: Container(
-          height: 190, // Adjust height as necessary to avoid overflow
+          height: 140, // Adjust height as necessary to avoid overflow
           width: 170,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12.0)),
-                child: Image.asset(
+                child: Image.network(
                   imageUrl,
                   height: 120, // Adjust image height as needed
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                              : null,
+                        ),
+                      );
+                    }
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(Icons.error);
+                  },
                 ),
               ),
               Padding(
@@ -75,15 +93,12 @@ class RestaurantCard extends StatelessWidget {
                         Icons.star,
                         color: Colors.amber,
                       ),
+                      ignoreGestures: true,
                       onRatingUpdate: (rating) {
                         // Handle rating update if needed
                       },
                     ),
                     SizedBox(height: 4),
-                    Text(
-                      'ID: $id',
-                      style: TextStyle(fontSize: 14.0),
-                    ),
                   ],
                 ),
               ),
