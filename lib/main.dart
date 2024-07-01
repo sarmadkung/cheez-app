@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'screens/home/home_screen.dart';
-import 'screens/map_screen.dart';
+import 'screens/map/map_screen.dart';
 import 'screens/track_screen.dart';
-import 'screens/profile_screen.dart';
+import 'screens/profile/profile_screen.dart';
 import 'screens/allRestaurants/all_restaurants_screen.dart';
 import 'bottom_navigation_bar.dart';
 import 'components/logo.dart';
