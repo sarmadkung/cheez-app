@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import '../home/restaurant_card.dart'; // Make sure to update the import statement
 import '../../bottom_navigation_bar.dart'; // Import the bottom navigation bar
+import '../../components/logo.dart'; // Import the Logo component
 
 class Restaurant {
   final String imageUrl;
@@ -9,12 +10,11 @@ class Restaurant {
   final int id;
   final double rating;
 
-
   Restaurant({
     required this.imageUrl,
     required this.title,
     required this.id,
-    required this.rating
+    required this.rating,
   });
 }
 
@@ -22,10 +22,11 @@ class AllRestaurantsScreen extends StatelessWidget {
   final List<Restaurant> restaurants = List.generate(
     10,
     (index) => Restaurant(
-      imageUrl: 'assets/cheez.png',
+      imageUrl:
+          'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg',
       title: 'Restaurant ${index + 1}',
       id: index + 1,
-      rating: 1.1
+      rating: 1.1,
     ),
   );
 
@@ -51,50 +52,57 @@ class AllRestaurantsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('All Restaurants'),
-      ),
-      body: Container(
-        color: Color(0xFFF8F8F8), // Off-white background color
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Align children to the start (left)
-          children: [
-            SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0), // Add horizontal padding
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between text and button
-                children: [
-                  Text(
-                    'Restaurants',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 16),
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Two cards per row
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 16.0,
-                  childAspectRatio: 0.75, // Adjust the aspect ratio as needed
+      body: SafeArea(
+        child: Container(
+          color: Color(0xFFF8F8F8), // Off-white background color
+          child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Align children to the start (left)
+            children: [
+              Logo(), // Add the Logo component here
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 0.0,
+                    vertical: 16.0), // Add horizontal and vertical padding
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: () {
+                        // Handle back button press
+                        Navigator.pop(context);
+                      },
+                    ),
+                    Text(
+                      'All Restaurants',
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                itemCount: restaurants.length,
-                itemBuilder: (context, index) {
-                  final restaurant = restaurants[index];
-                  return RestaurantCard(
-                    imageUrl: restaurant.imageUrl,
-                    title: restaurant.title,
-                    id: restaurant.id,
-                    rating: 1.1,
-                  );
-                },
               ),
-            ),
-          ],
+              Expanded(
+                child: GridView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, // Two cards per row
+                    crossAxisSpacing: 16.0,
+                    mainAxisSpacing: 16.0,
+                  ),
+                  itemCount: restaurants.length,
+                  itemBuilder: (context, index) {
+                    final restaurant = restaurants[index];
+                    return RestaurantCard(
+                      imageUrl: restaurant.imageUrl,
+                      title: restaurant.title,
+                      id: restaurant.id,
+                      rating: restaurant.rating,
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(

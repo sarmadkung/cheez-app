@@ -9,13 +9,12 @@ class RestaurantCard extends StatelessWidget {
   final int id;
   final double rating;
 
-  const RestaurantCard({
-    Key? key,
+  RestaurantCard({
     required this.imageUrl,
     required this.title,
     required this.id,
     required this.rating,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,20 +34,37 @@ class RestaurantCard extends StatelessWidget {
         elevation: 1.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
+          side: BorderSide(color: Colors.green[200]!, width: 1), // Add a 1px darker green border
         ),
+        color: Color.fromARGB(255, 248, 249, 248),
         child: Container(
-          height: 190,
-          width: 170,
+          width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12.0)),
-                child: Image.asset(
+                child: Image.network(
                   imageUrl,
-                  height: 120,
+                  height: 120, // Adjust image height as needed
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                              : null,
+                        ),
+                      );
+                    }
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(Icons.error);
+                  },
                 ),
               ),
               Padding(
@@ -64,21 +80,24 @@ class RestaurantCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 4),
-                    RatingBarIndicator(
-                      rating: rating,
-                      itemBuilder: (context, index) => Icon(
+                    RatingBar.builder(
+                      initialRating: rating,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 20,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                      itemBuilder: (context, _) => Icon(
                         Icons.star,
                         color: Colors.amber,
                       ),
-                      itemCount: 5,
-                      itemSize: 20,
-                      direction: Axis.horizontal,
+                      ignoreGestures: true,
+                      onRatingUpdate: (rating) {
+                        // Handle rating update if needed
+                      },
                     ),
                     SizedBox(height: 4),
-                    Text(
-                      'ID: $id',
-                      style: TextStyle(fontSize: 14.0),
-                    ),
                   ],
                 ),
               ),
