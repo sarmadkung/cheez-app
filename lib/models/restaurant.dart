@@ -1,4 +1,3 @@
-// lib/models/restaurant.dart
 import 'package:image_picker/image_picker.dart';
 
 class Restaurant {
@@ -7,6 +6,7 @@ class Restaurant {
   String owner;
   int employees;
   List<XFile> images;
+  bool favorite; // New field for favorite status
 
   Restaurant({
     required this.name,
@@ -14,5 +14,6 @@ class Restaurant {
     required this.owner,
     required this.employees,
     required this.images,
+    this.favorite = false, // Default value is false
   });
 }

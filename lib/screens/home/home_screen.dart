@@ -9,38 +9,39 @@ class Restaurant {
   final String title;
   final int id;
   final double rating;
-
+  final bool favorite;
   Restaurant({
     required this.imageUrl,
     required this.title,
     required this.id,
     required this.rating,
+    required this.favorite,
   });
 }
 
 class HomeScreen extends StatelessWidget {
   final List<Restaurant> popularRestaurants = [
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', title: 'Restaurant 1', id: 1, rating: 4.5),
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg', title: 'Restaurant 2', id: 2, rating: 3.8),
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg', title: 'Restaurant 3', id: 3, rating: 4.0),
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg', title: 'Restaurant 4', id: 4, rating: 4.2),
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/305236/pexels-photo-305236.jpeg', title: 'Restaurant 5', id: 5, rating: 4.7),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', title: 'Restaurant 1', id: 1, rating: 4.5, favorite: true),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg', title: 'Restaurant 2', id: 2, rating: 3.8, favorite: true),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg', title: 'Restaurant 3', id: 3, rating: 4.0, favorite: true),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg', title: 'Restaurant 4', id: 4, rating: 4.2, favorite: true),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/305236/pexels-photo-305236.jpeg', title: 'Restaurant 5', id: 5, rating: 4.7, favorite: true),
   ];
 
   final List<Restaurant> nearMeRestaurants = [
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg', title: ' Restaurant 1', id: 11, rating: 3.9),
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', title: ' Restaurant 2', id: 12, rating: 4.1),
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg', title: ' Restaurant 3', id: 13, rating: 4.3),
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg', title: ' Restaurant 4', id: 14, rating: 3.5),
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg', title: ' Restaurant 5', id: 15, rating: 4.6),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg', title: ' Restaurant 1', id: 11, rating: 3.9, favorite: true),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', title: ' Restaurant 2', id: 12, rating: 4.1, favorite: true),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg', title: ' Restaurant 3', id: 13, rating: 4.3, favorite: true),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg', title: ' Restaurant 4', id: 14, rating: 3.5, favorite: true),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg', title: ' Restaurant 5', id: 15, rating: 4.6, favorite: true),
   ];
 
   final List<Restaurant> suggestedRestaurants = [
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', title: 'Restaurant 1', id: 21, rating: 4.3),
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg', title: 'Restaurant 2', id: 22, rating: 4.4),
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', title: 'Restaurant 3', id: 23, rating: 4.1),
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg', title: 'Restaurant 4', id: 24, rating: 3.9),
-    Restaurant(imageUrl: 'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg', title: 'Restaurant 5', id: 25, rating: 4.5),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', title: 'Restaurant 1', id: 21, rating: 4.3, favorite: true),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg', title: 'Restaurant 2', id: 22, rating: 4.4, favorite: true),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', title: 'Restaurant 3', id: 23, rating: 4.1, favorite: true),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg', title: 'Restaurant 4', id: 24, rating: 3.9, favorite: true),
+    Restaurant(imageUrl: 'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg', title: 'Restaurant 5', id: 25, rating: 4.5, favorite: true),
   ];
 
   @override
@@ -127,6 +128,7 @@ class HomeScreen extends StatelessWidget {
                   title: restaurant.title,
                   id: restaurant.id,
                   rating: restaurant.rating,
+                  isFavorite: restaurant.favorite,
                 ),
               );
             },
