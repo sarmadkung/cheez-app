@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../components/custom_search_bar.dart';
 import './restaurant_card.dart';
 import '../restaurantDetail/restaurant_detail_screen.dart';
-import '../allRestaurants/all_restaurants_screen.dart';
+import '../restaurants/restaurants_screen.dart';
 
 class Restaurant {
   final String imageUrl;
