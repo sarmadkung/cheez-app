@@ -1,11 +1,16 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'providers/restaurant_provider.dart'; // Import your provider
 import 'screens/home/home_screen.dart';
 import 'screens/map/map_screen.dart';
 import 'screens/track_screen.dart';
 import 'screens/profile/profile_screen.dart';
-import 'screens/allRestaurants/all_restaurants_screen.dart';
+import 'screens/restaurants/restaurants_screen.dart';
+import 'screens/createRestaurant/create_restaurant.dart';
 import 'bottom_navigation_bar.dart';
 import 'components/logo.dart';
+import 'routes.dart'; // Import the routes file
 
 void main() {
   runApp(MyApp());
@@ -16,8 +21,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: BottomNavigationBarExample(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => RestaurantProvider()),
+        // Add other providers here if needed
+      ],
+      child: MaterialApp(
+        home: BottomNavigationBarExample(),
+        routes: Routes.routes, // Use the routes from Routes class
+      ),
     );
   }
 }

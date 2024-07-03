@@ -1,4 +1,8 @@
+// lib/screens/dish_details_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // Import provider
+import '../../providers/restaurant_provider.dart'; // Import your provider
+import '../../routes.dart'; // Import the routes
 
 class DishDetailsScreen extends StatelessWidget {
   final int dishId;
@@ -142,6 +146,12 @@ class DishDetailsScreen extends StatelessWidget {
                     }).toList(),
                   ),
                   SizedBox(height: 24.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.restaurantFormRoute);
+                    },
+                    child: Text('Create Restaurant'),
+                  ),
                 ],
               ),
             ),
