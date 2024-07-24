@@ -40,7 +40,7 @@ class RestaurantCard extends StatelessWidget {
         ),
         color: Color.fromARGB(255, 248, 249, 248),
         child: Container(
-          height: 140, // Adjust height as necessary to avoid overflow
+          height: 120, // Adjust height as necessary to avoid overflow
           width: 170,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

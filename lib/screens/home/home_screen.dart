@@ -3,6 +3,8 @@ import '../../components/custom_search_bar.dart';
 import './restaurant_card.dart';
 import '../restaurantDetail/restaurant_detail_screen.dart';
 import '../restaurants/restaurants_screen.dart';
+import '../../components/header.dart';
+import '../../models/cuisine.dart';
 
 class Restaurant {
   final String imageUrl;
@@ -44,33 +46,53 @@ class HomeScreen extends StatelessWidget {
     Restaurant(imageUrl: 'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg', title: 'Restaurant 5', id: 25, rating: 4.5, favorite: true),
   ];
 
+  final List<Cuisine> cuisines = [
+    Cuisine(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', name: 'American'),
+    Cuisine(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', name: 'Chinese'),
+    Cuisine(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', name: 'Indian'),
+    Cuisine(imageUrl: 'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg', name: 'Mexican'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
           color: Color(0xFFF8F8F8),
-          padding: EdgeInsets.symmetric(vertical: 8.0), // Reduced vertical padding
+          padding: EdgeInsets.symmetric(vertical: 4.0), // Reduced vertical padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Header(
+                userName: 'John Doe',
+                avatarUrl: '',
+                onNotificationPressed: () {
+                  // Handle notification press
+                },
+              ),
               CustomSearchBar(
                 selectedItemColor: Color.fromARGB(255, 2, 165, 43),
                 unselectedItemColor: Colors.black54,
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 4), // Reduced height
               buildRestaurantSection(
                 context,
                 'Popular Restaurants',
                 popularRestaurants,
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 8), // Reduced height
+              buildCuisineSection(
+                context,
+                'Cuisines',
+                cuisines,
+              ),
+              SizedBox(height: 8), // Reduced height
               buildRestaurantSection(
                 context,
                 'Near Me Restaurants',
                 nearMeRestaurants,
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 8), // Reduced height
               buildRestaurantSection(
                 context,
                 'Suggested for you',
@@ -88,7 +110,7 @@ class HomeScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0), // Updated padding
+          padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 4.0), // Reduced padding
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -113,22 +135,80 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 8), // Reduced height
+        SizedBox(height: 4), // Reduced height
         Container(
-          height: 210,
+          height: 195,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: restaurants.length,
             itemBuilder: (context, index) {
               final restaurant = restaurants[index];
               return Padding(
-                padding: EdgeInsets.only(left: index == 0 ? 8.0 : 0.0, right: 8.0),
+                padding: EdgeInsets.only(left: index == 0 ? 4.0 : 0.0, right: 4.0), // Reduced padding
                 child: RestaurantCard(
                   imageUrl: restaurant.imageUrl,
                   title: restaurant.title,
                   id: restaurant.id,
                   rating: restaurant.rating,
                   isFavorite: restaurant.favorite,
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildCuisineSection(BuildContext context, String title, List<Cuisine> cuisines) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 4.0), // Reduced padding
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(height: 4), // Reduced height
+        Container(
+          height: 120,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: cuisines.length,
+            itemBuilder: (context, index) {
+              final cuisine = cuisines[index];
+              return Padding(
+                padding: EdgeInsets.only(left: index == 0 ? 4.0 : 0.0, right: 4.0), // Reduced padding
+                child: Card(
+                  elevation: 4, // Adds shadow to the card
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Container(
+                    width: 100,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(8.0)),
+                          child: Image.network(
+                            cuisine.imageUrl,
+                            height: 80,
+                            width: 100,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(height: 4), // Reduced height
+                        Text(
+                          cuisine.name,
+                          style: TextStyle(fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               );
             },
