@@ -9,12 +9,13 @@ class Restaurant {
   final String title;
   final int id;
   final double rating;
-
+  final bool favorite;
   Restaurant({
     required this.imageUrl,
     required this.title,
     required this.id,
     required this.rating,
+    required this.favorite
   });
 }
 
@@ -27,6 +28,7 @@ class AllRestaurantsScreen extends StatelessWidget {
       title: 'Restaurant ${index + 1}',
       id: index + 1,
       rating: 1.1,
+      favorite: false
     ),
   );
 
@@ -97,6 +99,7 @@ class AllRestaurantsScreen extends StatelessWidget {
                       title: restaurant.title,
                       id: restaurant.id,
                       rating: restaurant.rating,
+                      isFavorite: restaurant.favorite,
                     );
                   },
                 ),

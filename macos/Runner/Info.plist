@@ -28,5 +28,13 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to the camera to allow you to take pictures of your restaurant.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to allow you to select pictures of your restaurant.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need access to your location to show nearby restaurants.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need access to your location to show nearby restaurants.</string>
 </dict>
 </plist>

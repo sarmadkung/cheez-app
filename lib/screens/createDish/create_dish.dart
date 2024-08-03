@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import '../../providers/restaurant_provider.dart';
-import '../../routes.dart'; // Import routes
+import '../../providers/dish_provider.dart';
+import '../../models/dish.dart';
 import 'dart:io';
 
-class RestaurantFormScreen extends StatelessWidget {
+class DishFormScreen extends StatelessWidget {
   final ImagePicker _picker = ImagePicker();
+  final TextEditingController _ingredientController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Restaurant'),
+        title: Text('Create Dish'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -24,24 +25,29 @@ class RestaurantFormScreen extends StatelessWidget {
               SizedBox(height: 20),
               _buildTextField(
                 context,
-                'Restaurant Name',
-                (value) => context.read<RestaurantProvider>().updateName(value),
+                'Dish Name',
+                (value) => context.read<DishProvider>().updateName(value),
               ),
               _buildTextField(
                 context,
-                'Location',
-                (value) => context.read<RestaurantProvider>().updateLocation(value),
+                'Description',
+                (value) => context.read<DishProvider>().updateDescription(value),
               ),
               _buildTextField(
                 context,
-                'Owner',
-                (value) => context.read<RestaurantProvider>().updateOwner(value),
+                'Ingredients',
+                (value) => _addIngredient(context, value),
               ),
               _buildTextField(
                 context,
-                'Employees',
-                (value) => context.read<RestaurantProvider>().updateEmployees(int.tryParse(value) ?? 0),
+                'Price',
+                (value) => _updatePrice(context, value),
                 keyboardType: TextInputType.number,
+              ),
+              _buildTextField(
+                context,
+                'Category',
+                (value) => context.read<DishProvider>().updateCategory(value),
               ),
               SizedBox(height: 20),
               Text('Upload Images'),
@@ -60,10 +66,10 @@ class RestaurantFormScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 20),
-              Consumer<RestaurantProvider>(
+              Consumer<DishProvider>(
                 builder: (context, provider, child) {
                   return Wrap(
-                    children: provider.restaurant.images.map((image) {
+                    children: provider.images.map((image) {
                       return Stack(
                         children: [
                           Image.file(File(image.path), width: 100, height: 100),
@@ -71,7 +77,7 @@ class RestaurantFormScreen extends StatelessWidget {
                             right: 0,
                             child: IconButton(
                               icon: Icon(Icons.remove_circle, color: Colors.red),
-                              onPressed: () => provider.removeImage(image),
+                              onPressed: () => context.read<DishProvider>().removeImages(),
                             ),
                           ),
                         ],
@@ -83,14 +89,7 @@ class RestaurantFormScreen extends StatelessWidget {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Handle form submission
-                },
-                child: Text('Create Restaurant'),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.dishFormRoute);
+                  _createDish(context);
                 },
                 child: Text('Create Dish'),
               ),
@@ -114,29 +113,44 @@ class RestaurantFormScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _pickImage(BuildContext context, ImageSource source) async {
-    final PermissionStatus status = await _requestPermission(source);
-    if (status == PermissionStatus.granted) {
-      final XFile? image = await _picker.pickImage(source: source);
-      if (image != null) {
-        context.read<RestaurantProvider>().addImage(image);
-      }
-    } else {
-      // Handle permission denied
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Permission denied')),
-      );
+  void _addIngredient(BuildContext context, String value) {
+    if (value.isNotEmpty) {
+      context.read<DishProvider>().addIngredient(value);
+      _ingredientController.clear();
     }
   }
 
-  Future<PermissionStatus> _requestPermission(ImageSource source) async {
-    Permission permission;
-    if (source == ImageSource.camera) {
-      permission = Permission.camera;
-    } else {
-      permission = Permission.photos;
+  void _updatePrice(BuildContext context, String value) {
+    double price = double.tryParse(value) ?? 0.0;
+    context.read<DishProvider>().updatePrice(price);
+  }
+
+  Future<void> _pickImage(BuildContext context, ImageSource source) async {
+    final XFile? image = await _picker.pickImage(source: source);
+    if (image != null) {
+      context.read<DishProvider>().addImage(image);
     }
-    final status = await permission.request();
-    return status;
+  }
+
+  void _createDish(BuildContext context) {
+    DishProvider dishProvider = context.read<DishProvider>();
+    Dish newDish = Dish(
+      name: dishProvider.name,
+      description: dishProvider.description,
+      ingredients: dishProvider.ingredients,
+      price: dishProvider.price,
+      category: dishProvider.category,
+      images: dishProvider.images.map((image) => image.path).toList(),
+    );
+
+    // Perform any additional actions, such as submitting to a database
+
+    // Clear form fields and reset state
+    dishProvider.updateName('');
+    dishProvider.updateDescription('');
+    dishProvider.updateIngredients([]);
+    dishProvider.updatePrice(0.0);
+    dishProvider.updateCategory('');
+    dishProvider.removeImages();
   }
 }
