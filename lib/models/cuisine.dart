@@ -1,11 +1,9 @@
-// cuisine.dart
-
 class Cuisine {
-  final String imageUrl;
+  final String svgIconPath;
   final String name;
   
   Cuisine({
-    required this.imageUrl,
+    required this.svgIconPath,
     required this.name,
   });
 }

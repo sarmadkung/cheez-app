@@ -7,9 +7,7 @@ import 'screens/map/map_screen.dart';
 import 'screens/track_screen.dart';
 import 'screens/profile/profile_screen.dart';
 import 'screens/restaurants/restaurants_screen.dart';
-import 'screens/createDish/create_dish.dart';
 import 'bottom_navigation_bar.dart';
-import 'components/logo.dart';
 import 'routes.dart'; // Import routes
 
 void main() {
@@ -30,6 +28,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        scaffoldBackgroundColor: Color(0xFFF5F5F5), // Set global background color
+      ),
       home: BottomNavigationBarExample(),
       routes: Routes.routes, // Register routes
     );
@@ -65,22 +66,17 @@ class _BottomNavigationBarExampleState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 100, // Adjust height as needed
-            child: Center(
-              child: Logo(), // Use the Logo component here
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: IndexedStack(
+                index: _selectedIndex,
+                children: _widgetOptions,
+              ),
             ),
-          ),
-          Expanded(
-            child: IndexedStack(
-              index: _selectedIndex,
-              children: _widgetOptions,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         selectedIndex: _selectedIndex,

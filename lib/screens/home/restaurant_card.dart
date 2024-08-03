@@ -7,7 +7,7 @@ class RestaurantCard extends StatelessWidget {
   final String title;
   final int id;
   final double rating;
-  final bool isFavorite; // New field for favorite status
+  final bool isFavorite;
 
   const RestaurantCard({
     Key? key,
@@ -15,7 +15,7 @@ class RestaurantCard extends StatelessWidget {
     required this.title,
     required this.id,
     required this.rating,
-    required this.isFavorite, // Initialize the favorite status
+    required this.isFavorite,
   }) : super(key: key);
 
   @override
@@ -33,14 +33,13 @@ class RestaurantCard extends StatelessWidget {
         );
       },
       child: Card(
-        elevation: 1.0,
+        elevation: 1.0, // Added subtle shadow
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
-          side: BorderSide(color: Colors.green[200]!, width: 1), // Add a 1px darker green border
         ),
-        color: Color.fromARGB(255, 248, 249, 248),
+        color: Colors.white, // Set background color to white
         child: Container(
-          height: 120, // Adjust height as necessary to avoid overflow
+          height: 120,
           width: 170,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +51,7 @@ class RestaurantCard extends StatelessWidget {
                     borderRadius: BorderRadius.vertical(top: Radius.circular(12.0)),
                     child: Image.network(
                       imageUrl,
-                      height: 120, // Adjust image height as needed
+                      height: 120,
                       width: double.infinity,
                       fit: BoxFit.cover,
                       loadingBuilder: (context, child, loadingProgress) {

@@ -1,42 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CuisineCard extends StatelessWidget {
-  final String imageUrl;
+  final String assetPath;
   final String name;
 
   const CuisineCard({
     Key? key,
-    required this.imageUrl,
+    required this.assetPath,
     required this.name,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 2, // Adjust shadow as needed
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Container(
         width: 100,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8.0),
-                topRight: Radius.circular(8.0),
-              ),
-              child: Image.network(
-                imageUrl,
-                height: 80,
-                width: 100,
-                fit: BoxFit.cover,
-              ),
-            ),
+            SvgPicture.asset(assetPath, height: 50),
             SizedBox(height: 8),
             Text(
               name,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 14),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
@@ -44,3 +36,4 @@ class CuisineCard extends StatelessWidget {
     );
   }
 }
+
