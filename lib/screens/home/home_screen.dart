@@ -7,6 +7,7 @@ import '../cuisines/cuisines.dart'; // Import the new screen
 import '../../components/header.dart';
 import '../../models/cuisine.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 class Restaurant {
   final String imageUrl;
   final String title;
@@ -24,7 +25,7 @@ class Restaurant {
 
 class HomeScreen extends StatelessWidget {
   final List<Restaurant> popularRestaurants = [
-     Restaurant(
+    Restaurant(
         imageUrl:
             'https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg',
         title: 'Restaurant 1',
@@ -137,25 +138,24 @@ class HomeScreen extends StatelessWidget {
         favorite: true),
   ];
 
-final List<Cuisine> cuisines = [
-  Cuisine(
-    svgIconPath: 'assets/burger.svg',
-    name: 'American',
-  ),
-  Cuisine(
-    svgIconPath: 'assets/burger.svg',
-    name: 'Chinese',
-  ),
-  Cuisine(
-    svgIconPath: 'assets/burger.svg',
-    name: 'Indian',
-  ),
-  Cuisine(
-    svgIconPath: 'assets/burger.svg', // Change to appropriate icon
-    name: 'Mexican',
-  ),
-];
-
+  final List<Cuisine> cuisines = [
+    Cuisine(
+      svgIconPath: 'assets/burger.svg',
+      name: 'American',
+    ),
+    Cuisine(
+      svgIconPath: 'assets/burger.svg',
+      name: 'Chinese',
+    ),
+    Cuisine(
+      svgIconPath: 'assets/burger.svg',
+      name: 'Indian',
+    ),
+    Cuisine(
+      svgIconPath: 'assets/burger.svg', // Change to appropriate icon
+      name: 'Mexican',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +163,8 @@ final List<Cuisine> cuisines = [
       body: SingleChildScrollView(
         child: Container(
           color: Color(0xFFF5F5F5), // Updated background color
-          padding: EdgeInsets.symmetric(vertical: 2.0), // Reduced vertical padding
+          padding:
+              EdgeInsets.symmetric(vertical: 2.0), // Reduced vertical padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -209,8 +210,8 @@ final List<Cuisine> cuisines = [
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(
-              8.0, 4.0, 8.0, 4.0), // Reduced padding
+          padding:
+              const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0), // Reduced padding
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -262,8 +263,7 @@ final List<Cuisine> cuisines = [
     );
   }
 
-Widget buildCuisineSection(
-    BuildContext context, String title, List<Cuisine> cuisines) {
+Widget buildCuisineSection(BuildContext context, String title, List<Cuisine> cuisines) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -295,7 +295,7 @@ Widget buildCuisineSection(
       ),
       SizedBox(height: 4), // Reduced height
       Container(
-        height: 120,
+        height: 70,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: cuisines.length,
@@ -303,32 +303,45 @@ Widget buildCuisineSection(
             final cuisine = cuisines[index];
             return Padding(
               padding: EdgeInsets.only(
-                  left: index == 0 ? 4.0 : 0.0,
-                  right: 4.0),
+                left: index == 0 ? 4.0 : 0.0,
+                right: 4.0,
+              ),
               child: Card(
-                elevation: 4, // Adds shadow to the card
+                elevation: 1, // Reduced shadow to 1px
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
+                color: Colors.white, // Set background color to white
                 child: Container(
-                  width: 100,
-                  child: Column(
+                  width: 130,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 1,
+                        spreadRadius: 1,
+                        offset: Offset(1, 1), // Changes position of shadow
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(8.0)),
-                        child: SvgPicture.asset(
-                          cuisine.svgIconPath,
-                          height: 80,
-                          width: 100,
-                          fit: BoxFit.cover,
-                        ),
+                      SvgPicture.asset(
+                        cuisine.svgIconPath,
+                        height: 40,
+                        width: 40,
+                        fit: BoxFit.cover,
                       ),
-                      SizedBox(height: 4), // Reduced height
+                      SizedBox(width: 8), // Space between icon and text
                       Text(
                         cuisine.name,
-                        style: TextStyle(fontSize: 14),
-                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16, // Increased font size
+                          fontWeight: FontWeight.bold, // Bold font style
+                        ),
                       ),
                     ],
                   ),
@@ -341,4 +354,5 @@ Widget buildCuisineSection(
     ],
   );
 }
+
 }
