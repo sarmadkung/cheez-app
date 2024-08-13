@@ -1,7 +1,7 @@
 // all_restaurants_screen.dart
 import 'package:flutter/material.dart';
 import '../home/restaurant_card.dart'; // Make sure to update the import statement
-import '../../bottom_navigation_bar.dart'; // Import the bottom navigation bar
+import '../../components/bottom_navigation_bar.dart'; // Import the bottom navigation bar
 import '../../components/logo.dart'; // Import the Logo component
 
 class Restaurant {
