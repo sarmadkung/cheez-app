@@ -146,12 +146,6 @@ class DishDetailsScreen extends StatelessWidget {
                     }).toList(),
                   ),
                   SizedBox(height: 24.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, Routes.restaurantFormRoute);
-                    },
-                    child: Text('Create Restaurant'),
-                  ),
                 ],
               ),
             ),

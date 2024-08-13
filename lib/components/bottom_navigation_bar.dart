@@ -13,7 +13,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFF5F5F5), // Ensure the container color is correct
+      color: const Color(0xFFF5F5F5), // Ensure the container color is correct
       child: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -34,9 +34,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
           ),
         ],
         currentIndex: selectedIndex,
-        selectedItemColor: Color.fromARGB(255, 3, 134, 16),
+        selectedItemColor: const Color.fromARGB(255, 3, 134, 16),
         unselectedItemColor: Colors.black54,
-        backgroundColor: Colors.transparent, // Set background color to transparent
+        backgroundColor: Colors.transparent,
         onTap: onItemTapped,
       ),
     );

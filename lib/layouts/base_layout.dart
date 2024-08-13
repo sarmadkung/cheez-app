@@ -1,6 +1,6 @@
 // base_layout.dart
 import 'package:flutter/material.dart';
-import '../bottom_navigation_bar.dart';
+import '../components/bottom_navigation_bar.dart';
 
 class BaseLayout extends StatelessWidget {
   final Widget body;
