@@ -1,27 +1,31 @@
+import 'package:cheez/state/login_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerWidget {
   final TextEditingController _mobileController = TextEditingController();
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-
-  Future<void> _handleGoogleSignIn(BuildContext context) async {
-    try {
-      final GoogleSignInAccount? user = await _googleSignIn.signIn();
-      if (user != null) {
-        // Handle successful sign-in
-        Navigator.pushReplacementNamed(context, '/home');
-      }
-    } catch (error) {
-      // Handle error
-      print('Google Sign-In error: $error');
-    }
-  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final borderRadius = BorderRadius.circular(8.0);
     final buttonHeight = 48.0; // Set the height you want for the buttons
+
+    final loginState = ref.watch(loginStateProvider);
+
+    ref.listen<AsyncValue<void>>(loginStateProvider, (previous, next) {
+      // Handle navigation or show error messages
+      if (next is AsyncData) {
+        Navigator.pushReplacementNamed(context, '/home');
+      } else if (next is AsyncError) {
+        // Show error as a snackbar or alert dialog
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(next.error.toString()),
+          ),
+        );
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +38,6 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Add Text widget above the TextField
             Text(
               'Login',
               style: TextStyle(
@@ -76,10 +79,11 @@ class LoginScreen extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity, // Set the width to match the TextField
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     String mobileNumber = _mobileController.text;
-                    // Add login logic here, and upon success:
-                    Navigator.pushReplacementNamed(context, '/home');
+                    if (mobileNumber.isNotEmpty) {
+                      await ref.read(loginStateProvider.notifier).login(mobileNumber);
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF45B666), // Button color
@@ -130,5 +134,19 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _handleGoogleSignIn(BuildContext context) async {
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    try {
+      final GoogleSignInAccount? user = await _googleSignIn.signIn();
+      if (user != null) {
+        // Handle successful sign-in
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    } catch (error) {
+      // Handle error
+      print('Google Sign-In error: $error');
+    }
   }
 }
