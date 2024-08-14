@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'providers/restaurant_provider.dart';
 import 'providers/dish_provider.dart';
@@ -7,15 +8,22 @@ import 'routes.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => RestaurantProvider()),
-        ChangeNotifierProvider(create: (_) => DishProvider()),
-      ],
-      child: const MyApp(),
+    ProviderScope(
+      child: MyApp(),
     ),
   );
 }
+// void main() {
+//   runApp(
+//     MultiProvider(
+//       providers: [
+//         ChangeNotifierProvider(create: (_) => RestaurantProvider()),
+//         ChangeNotifierProvider(create: (_) => DishProvider()),
+//       ],
+//       child: const MyApp(),
+//     ),
+//   );
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
