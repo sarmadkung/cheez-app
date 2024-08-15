@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
-import 'providers/restaurant_provider.dart';
-import 'providers/dish_provider.dart';
 import 'screens/login/login_screen.dart'; // Import your LoginScreen
 import 'routes.dart';
 

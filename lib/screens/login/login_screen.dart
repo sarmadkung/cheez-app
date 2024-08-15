@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends ConsumerWidget {
-  final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,44 +46,81 @@ class LoginScreen extends ConsumerWidget {
                 fontWeight: FontWeight.bold, // Font weight of the text
               ),
             ),
-            SizedBox(height: 20), // Add some space between the text and the TextField
-            Container(
-              height: buttonHeight, // Set the height of the TextField container
-              child: TextField(
-                controller: _mobileController,
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 12.0, // Adjust vertical padding to match button height
-                    horizontal: 16.0, // Adjust horizontal padding (left and right)
-                  ),
-                  hintText: 'Enter phone number',
-                  hintStyle: TextStyle(color: Colors.grey[400]), // Placeholder text color
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[400]!), // Border color
-                    borderRadius: borderRadius,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[400]!), // Border color when enabled
-                    borderRadius: borderRadius,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[400]!), // Border color when focused
-                    borderRadius: borderRadius,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
+            SizedBox(height: 20), // Add some space between the text and the TextFields
+
+// Email Field
+Container(
+  height: buttonHeight, // Set the height of the TextField container
+  child: TextField(
+    controller: _emailController,
+    keyboardType: TextInputType.emailAddress,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.symmetric(
+        vertical: 12.0, // Adjust vertical padding to match button height
+        horizontal: 16.0, // Adjust horizontal padding (left and right)
+      ),
+      hintText: 'Enter email',
+      hintStyle: TextStyle(color: Colors.grey[400]), // Placeholder text color
+      border: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[400]!), // Border color
+        borderRadius: borderRadius,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[400]!), // Border color when enabled
+        borderRadius: borderRadius,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Color(0xFF45B666), width: 2.0), // Border color when focused
+        borderRadius: borderRadius,
+      ),
+    ),
+  ),
+),
+SizedBox(height: 20),
+
+// Password Field
+Container(
+  height: buttonHeight, // Set the height of the TextField container
+  child: TextField(
+    controller: _passwordController,
+    obscureText: true, // Hide password input
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.symmetric(
+        vertical: 12.0, // Adjust vertical padding to match button height
+        horizontal: 16.0, // Adjust horizontal padding (left and right)
+      ),
+      hintText: 'Enter password',
+      hintStyle: TextStyle(color: Colors.grey[400]), // Placeholder text color
+      border: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[400]!), // Border color
+        borderRadius: borderRadius,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[400]!), // Border color when enabled
+        borderRadius: borderRadius,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Color(0xFF45B666), width: 2.0), // Border color when focused
+        borderRadius: borderRadius,
+      ),
+    ),
+  ),
+),
+
+// Add margin after Password field
+SizedBox(height: 30), // Adjust height for the margin
+
+            // Login Button
             Align(
               alignment: Alignment.center,
               child: SizedBox(
-                width: double.infinity, // Set the width to match the TextField
+                width: double.infinity, // Set the width to match the TextFields
                 child: ElevatedButton(
                   onPressed: () async {
-                    String mobileNumber = _mobileController.text;
-                    if (mobileNumber.isNotEmpty) {
-                      await ref.read(loginStateProvider.notifier).login(mobileNumber);
+                    String email = _emailController.text;
+                    String password = _passwordController.text;
+                    if (email.isNotEmpty && password.isNotEmpty) {
+                     await ref.read(loginStateProvider.notifier).login(email, password);
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -98,10 +136,12 @@ class LoginScreen extends ConsumerWidget {
               ),
             ),
             SizedBox(height: 20),
+
+            // Google Login Button
             Align(
               alignment: Alignment.center,
               child: SizedBox(
-                width: double.infinity, // Set the width to match the TextField
+                width: double.infinity, // Set the width to match the TextFields
                 child: ElevatedButton(
                   onPressed: () {
                     _handleGoogleSignIn(context); // Pass context to the method

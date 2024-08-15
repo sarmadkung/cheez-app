@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 class DioClient {
   final Dio _dio;
 
-  DioClient()
+  DioClient(Dio dio)
       : _dio = Dio(
           BaseOptions(
              baseUrl: 'http://localhost:8080',
